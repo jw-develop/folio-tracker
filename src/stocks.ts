@@ -1,5 +1,11 @@
 
 
+export const headers: string[] = [
+    "Symbol",
+    "Price",
+    "Sector"
+]
+
 export const stocks: string[] = [
     "AAPL",
     "CHK",

@@ -1,7 +1,7 @@
 import React from 'react';
 import { CSVLink } from 'react-csv';
 import { CsvToHtmlTable } from "react-csv-to-table";
-import { stocks } from './stocks';
+import { headers, stocks } from './stocks';
 import { simplifyCSV } from './Util';
 import './App.css';
 
@@ -18,11 +18,14 @@ class FolioTable extends React.Component <{}, { data: string[][] }> {
     if (this.state) {
       let grid = this.state.data;
       grid.forEach(arr => {
-        fetch("https://financialmodelingprep.com/api/v3/quote/" + arr[0])
+        fetch("https://financialmodelingprep.com/api/v3/company/profile/" + arr[0])
         .then(async e => {
           const response = await e.json();
-          const p = response[0].price;
-          arr[1] = p;
+          const profile = response.profile;
+          console.log(profile);
+          arr[1] = profile.price
+          arr[2] = profile.sector;
+
           this.setState({
             data: grid,
           })
@@ -45,10 +48,10 @@ class FolioTable extends React.Component <{}, { data: string[][] }> {
         <button onClick={() => this.addColumns()}>
           Add Prices
         </button>
-        <button><CSVLink data={this.state.data}filename={"folio-export.csv"}>Download CSV</CSVLink></button>
+        <button><CSVLink headers={headers} data={this.state.data} filename={"folio-export.csv"}>Download CSV</CSVLink></button>
         <CsvToHtmlTable
           id="mainTable"
-          data={simplifyCSV(this.state.data)}
+          data={simplifyCSV(headers,this.state.data)}
           csvDelimiter=","
           tableClassName="table"
         />
