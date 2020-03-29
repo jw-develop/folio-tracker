@@ -15,10 +15,9 @@ export function capTier(cap: number) {
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <InfoTable></InfoTable>
-        <SectorTable></SectorTable>
-      </header>
+      {/* <header className="App-header"></header> */}
+      <InfoTable></InfoTable>
+      <SectorTable></SectorTable>
     </div>
   );
 }

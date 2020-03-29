@@ -37,7 +37,8 @@ export class SectorTable extends React.Component<{}, {
     });
   }
   render() {
-    return (<div>
+    return (
+    <div>
       <button onClick={() => this.refresh()}>Refresh</button>
       <button><CSVLink headers={sectors} data={this.state.data} filename={"folio-export.csv"}>Download CSV</CSVLink></button>
       <CsvToHtmlTable id="mainTable" data={simplifyCSV(sectors, this.state.data)} csvDelimiter="," tableClassName="table" />
