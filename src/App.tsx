@@ -1,7 +1,7 @@
 import React from 'react';
 import { CSVLink } from 'react-csv';
 import { CsvToHtmlTable } from "react-csv-to-table";
-import { headers1, sectors, stocks } from './stocks';
+import { headers1, sectors, stocks, caps } from './stocks';
 import { simplifyCSV } from './Util';
 import './App.css';
 import { exists } from 'fs';
@@ -61,11 +61,24 @@ class FolioTable extends React.Component <{}, { data: string[][] }> {
   }
 }
 
+function capTier(cap: number) {
+  if (cap > 85000000000) return 0;
+  else if (cap > 10000000000) return 1;
+  else if (cap > 2000000000) return 2;
+  else return 3;
+}
+
 class FolioTable2 extends React.Component <{}, { data: string[][] }> {
   constructor(props: any) {
     super(props);
+    let grid = [["Mega"],["Large"],["Medium"],["Small"]];
+    for (let arr of grid) {
+      for (let i = 0;i < 10;i++) {
+        arr.push(" ");
+      }
+    }
     this.state = {
-      data: [[],[]],
+      data: grid,
     }
   }
   public addColumns() {
@@ -74,15 +87,11 @@ class FolioTable2 extends React.Component <{}, { data: string[][] }> {
       stocks.forEach(stock => {
         fetch("https://financialmodelingprep.com/api/v3/company/profile/" + stock)
         .then(async e => {
-          let arr: string[] = [];
-          grid.push(arr);
           const response = await e.json();
           const profile = response.profile;
-          for (let i = 0 ; i < sectors.length ; i++) {
-            console.log(profile.sector + " " + sectors[i]);
-            if (sectors[i] === profile.sector) arr.push(stock + " " + profile.mktCap);
-            else arr.push(" ");
-          }
+          let i = 0;
+          while (i < sectors.length && sectors[i] !== profile.sector) i++;
+          grid[capTier(profile.mktCap)][i] = grid[capTier(profile.mktCap)][i] + stock + " " + profile.mktCap + " ";
           console.log(profile);
 
           this.setState({
