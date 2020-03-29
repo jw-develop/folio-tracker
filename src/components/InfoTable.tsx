@@ -10,8 +10,9 @@ export class InfoTable extends React.Component <{}, { data: string[][] }> {
       this.state = {
         data: stocks.map(e => [e]),
       }
+      this.refresh();
     }
-    public addColumns() {
+    public refresh() {
       if (this.state) {
         let grid = this.state.data;
         grid.forEach(arr => {
@@ -33,18 +34,7 @@ export class InfoTable extends React.Component <{}, { data: string[][] }> {
     render() {
       return (
         <div>
-          <button onClick={() => {
-            let grid = this.state.data;
-            grid[0].push("babs")
-            this.setState({
-              data: grid,
-            })
-          }}>
-            Add Val To Data
-          </button>
-          <button onClick={() => this.addColumns()}>
-            Add Prices
-          </button>
+          <button onClick={() => this.refresh()}>Refresh</button>
           <button><CSVLink headers={headers1} data={this.state.data} filename={"folio-export.csv"}>Download CSV</CSVLink></button>
           <CsvToHtmlTable
             id="mainTable"
