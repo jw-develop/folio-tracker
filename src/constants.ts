@@ -1,11 +1,10 @@
 
-
-// export const 
-export const caps: Map<string,number> = new Map();
-caps.set("Mega",85000000000);
-caps.set("Large",10000000000);
-caps.set("Medium",2000000000);
-caps.set("Small",0);
+export const caps: string[] = [
+    "Mega",
+    "Large",
+    "Medium",
+    "Small",
+];
 
 export const headers1: string[] = [
     "Symbol",
