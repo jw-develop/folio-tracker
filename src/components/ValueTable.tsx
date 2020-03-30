@@ -6,7 +6,7 @@ import { simplifyCSV } from '../util/Util';
 import { capTier } from "../util/capTier";
 import { profiles } from '../util/StockProfiles';
 
-export class SectorTable extends React.Component<{}, {
+export class ValueTable extends React.Component<{}, {
   data: string[][];
 }> {
   constructor(props: any) {
@@ -25,7 +25,9 @@ export class SectorTable extends React.Component<{}, {
       let i = 0;
       while (i < sectors.length && sectors[i] !== profile.sector)
         i++;
-      grid[capTier(profile.mktCap)][i] = grid[capTier(profile.mktCap)][i] + profile.symbol + " " + profile.mktCap + " ";
+      grid[capTier(profile.mktCap)][i] = 
+        ((parseFloat(grid[capTier(profile.mktCap)][i]) || 0) + 
+        (parseFloat(profile.owned) * (profile.price))).toString();
       console.log(profile);
       this.setState({
         data: grid,
@@ -35,7 +37,7 @@ export class SectorTable extends React.Component<{}, {
   render() {
     return (
     <div>
-      <header>-- Sector Table</header>
+      <header>-- Value Table</header>
       <button onClick={() => this.refresh()}>Refresh</button>
       <button><CSVLink headers={sectors} data={this.state.data} filename={"folio-export.csv"}>Download CSV</CSVLink></button>
       <CsvToHtmlTable id="mainTable" data={simplifyCSV(sectors, this.state.data)} csvDelimiter="," tableClassName="table" />

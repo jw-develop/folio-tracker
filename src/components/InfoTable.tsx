@@ -8,7 +8,7 @@ export class InfoTable extends React.Component <{}, { data: string[][] }> {
     constructor(props: any) {
       super(props);
       this.state = {
-        data: stocks.map(e => [e]),
+        data: stocks.map(e => [e[0]]),
       }
       this.refresh();
     }
@@ -34,6 +34,7 @@ export class InfoTable extends React.Component <{}, { data: string[][] }> {
     render() {
       return (
         <div>
+          <header>-- Info Table</header>
           <button onClick={() => this.refresh()}>Refresh</button>
           <button><CSVLink headers={headers1} data={this.state.data} filename={"folio-export.csv"}>Download CSV</CSVLink></button>
           <CsvToHtmlTable

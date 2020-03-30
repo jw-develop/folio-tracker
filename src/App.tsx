@@ -1,16 +1,11 @@
 import React from 'react';
-import { InfoTable } from "./components/InfoTable";
 import './App.css';
+
+import { InfoTable } from "./components/InfoTable";
 import { SectorTable } from './components/SectorTable';
+import { ValueTable } from './components/ValueTable';
 
 // Documentation for API at https://financialmodelingprep.com/developer/docs/#Company-Profile
-
-export function capTier(cap: number) {
-  if (cap > 85000000000) return 0;
-  else if (cap > 10000000000) return 1;
-  else if (cap > 2000000000) return 2;
-  else return 3;
-}
 
 function App() {
   return (
@@ -18,6 +13,7 @@ function App() {
       {/* <header className="App-header"></header> */}
       <InfoTable></InfoTable>
       <SectorTable></SectorTable>
+      <ValueTable></ValueTable>
     </div>
   );
 }
