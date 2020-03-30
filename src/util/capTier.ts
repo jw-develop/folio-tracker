@@ -1,3 +1,5 @@
+
+
 // Documentation for API at https://financialmodelingprep.com/developer/docs/#Company-Profile
 export function capTier(cap: number) {
   if (cap > 85000000000)
