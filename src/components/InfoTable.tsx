@@ -10,7 +10,6 @@ export class InfoTable extends React.Component <{}, { data: string[][] }> {
       this.state = {
         data: stocks.map(e => [e[0]]),
       }
-      this.refresh();
     }
     public refresh() {
       if (this.state) {
@@ -20,7 +19,6 @@ export class InfoTable extends React.Component <{}, { data: string[][] }> {
           .then(async e => {
             const response = await e.json();
             const profile = response.profile;
-            console.log(profile);
             arr[1] = profile.price
             arr[2] = profile.sector;
   

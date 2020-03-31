@@ -4,7 +4,7 @@ import { CsvToHtmlTable } from "react-csv-to-table";
 import { sectors, caps } from '../constants';
 import { simplifyCSV } from '../util/Util';
 import { capTier } from '../util/capTier';
-import { profiles } from '../util/StockProfiles';
+import { getProfiles, Profile } from '../util/StockProfiles';
 
 export class ValueTable extends React.Component<{}, {
   data: string[][];
@@ -14,13 +14,14 @@ export class ValueTable extends React.Component<{}, {
     this.state = {data: [[]]};
     this.refresh();
   }
-  public refresh() {
+  public async refresh() {
     let grid = caps.map(e => [e]);
     for (let arr of grid) {
       for (let i = 0; i < sectors.length; i++) {
         arr.push(" ");
       }
     }
+    const profiles: Profile[] = await getProfiles();
     profiles.forEach(profile => {
       let i = 0;
       while (i < sectors.length && sectors[i] !== profile.sector)
@@ -29,6 +30,7 @@ export class ValueTable extends React.Component<{}, {
         ((parseFloat(grid[capTier(profile.mktCap)][i]) || 0) + 
             (parseFloat(profile.owned) * (profile.price)))
             .toFixed(2).toString();
+      console.log(profile.symbol);
       console.log(profile);
       this.setState({
         data: grid,

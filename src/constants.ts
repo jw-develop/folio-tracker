@@ -30,8 +30,8 @@ export const sectors: string[] = [
 
 export const stocks: string[][] = [
     ["AAPL","1"],
-    // ["BLV","1"],
-    // ["BND","1"],
+    ["BLV","1"],
+    ["BND","1"],
     ["CHK","1"],
     ["CVS","2"],
     ["EPR","6"],
